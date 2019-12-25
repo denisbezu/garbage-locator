@@ -19,32 +19,29 @@ class MarkerRepository extends ServiceEntityRepository
         parent::__construct($registry, Marker::class);
     }
 
-    // /**
-    //  * @return Marker[] Returns an array of Marker objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param $longitude
+     * @param $latitude
+     * @return Marker|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findOneByLngLat($longitude, $latitude): ?Marker
     {
-        return $this->createQueryBuilder('�')
-            ->andWhere('�.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('�.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $minLongitude = $longitude - 0.001;
+        $maxLongitude = $longitude + 0.001;
+        $minLatitude = $latitude - 0.001;
+        $maxLatitude = $latitude + 0.001;
 
-    /*
-    public function findOneBySomeField($value): ?Marker
-    {
-        return $this->createQueryBuilder('�')
-            ->andWhere('�.exampleField = :val')
-            ->setParameter('val', $value)
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.longitude <= :maxLongitude')
+            ->andWhere('m.longitude >= :minLongitude')
+            ->andWhere('m.latitude <= :maxLatitude')
+            ->andWhere('m.latitude >= :minLatitude')
+            ->setParameter('minLongitude', $minLongitude)
+            ->setParameter('maxLongitude', $maxLongitude)
+            ->setParameter('minLatitude', $minLatitude)
+            ->setParameter('maxLatitude', $maxLatitude)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
-    */
 }

@@ -69,7 +69,7 @@ final class AppSecurityController extends AbstractController
 
         $userClone = clone $userEntity;
         $userClone->setPassword('');
-        $data = $this->serializer->serialize($userClone, JsonEncoder::FORMAT);
+        $data = $this->serializer->serialize($userClone, JsonEncoder::FORMAT, ['groups' => ['default']]);
 
         return new JsonResponse($data, Response::HTTP_OK, [], true);
     }

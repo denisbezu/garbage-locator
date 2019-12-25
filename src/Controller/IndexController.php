@@ -34,7 +34,7 @@ class IndexController extends AbstractController
         if (!empty($user)) {
             $userClone = clone $user;
             $userClone->setPassword('');
-            $data = $this->serializer->serialize($userClone, JsonEncoder::FORMAT);
+                $data = $this->serializer->serialize($userClone, JsonEncoder::FORMAT, ['groups' => ['default']]);
         }
 
         return $this->render('base.html.twig', [
