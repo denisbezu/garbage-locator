@@ -31,6 +31,15 @@
           >
             <a class="nav-link">Home</a>
           </router-link>
+          <router-link
+              v-if="isAuthenticated"
+              class="nav-item"
+              tag="li"
+              to="/account"
+              active-class="active"
+            >
+            <a class="nav-link">My account</a>
+          </router-link>
           <li
               v-if="!isAuthenticated"
               class="nav-item"

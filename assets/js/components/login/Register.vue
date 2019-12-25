@@ -4,8 +4,8 @@
       <h1>Register</h1>
     </div>
 
-    <div class="row col">
-      <form>
+    <div class="card">
+      <form class="card-body">
         <div class="form-group">
           <label for="email">Email address</label>
           <input
@@ -31,7 +31,7 @@
           >
         </div>
         <div class="form-group">
-          <label for="email">Password</label>
+          <label for="password">Password</label>
           <input
               v-model="password"
               type="password"

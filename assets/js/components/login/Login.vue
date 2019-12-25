@@ -4,13 +4,13 @@
       <h1>Login</h1>
     </div>
 
-    <div class="row col">
-      <form>
+    <div class="card">
+      <form class="card-body">
         <div class="form-row">
           <div class="col-4">
             <input
                 v-model="email"
-                type="text"
+                type="email"
                 class="form-control"
             >
           </div>

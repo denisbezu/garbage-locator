@@ -16,15 +16,10 @@
 </template>
 
 <script>
+  import user from '../../mixins/user';
+
   export default {
-    computed: {
-      isAuthenticated() {
-        return this.$store.getters["security/isAuthenticated"];
-      },
-      user() {
-        return this.$store.getters["security/user"];
-      },
-    },
+    mixins: [user]
   }
 </script>
 

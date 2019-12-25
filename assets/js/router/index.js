@@ -4,16 +4,22 @@ import store from '../store';
 import Home from '../components/home/Home';
 import Login from '../components/login/Login';
 import Register from '../components/login/Register';
+import Account from "../components/account/Account";
 
 Vue.use(VueRouter);
 
 let router = new VueRouter({
   mode: 'history',
   routes: [
-    { path: '/home', component: Home },
-    { path: '/login', component: Login },
-    { path: '/register', component: Register },
-    { path: '*', redirect: '/home' }
+    {path: '/home', component: Home},
+    {path: '/login', component: Login},
+    {path: '/register', component: Register},
+    {
+      path: '/account',
+      component: Account,
+      meta: {requiresAuth: true}
+    },
+    {path: '*', redirect: '/home'}
   ],
 });
 
@@ -26,7 +32,7 @@ router.beforeEach((to, from, next) => {
     } else {
       next({
         path: '/login',
-        query: { redirect: to.fullPath }
+        query: {redirect: to.fullPath}
       });
     }
   } else {
