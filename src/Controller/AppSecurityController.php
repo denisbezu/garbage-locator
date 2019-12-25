@@ -8,6 +8,7 @@ use App\Entity\User;
 use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -34,8 +35,37 @@ final class AppSecurityController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
-        VarDumper::dump($user);
         $userClone = clone $user;
+        $userClone->setPassword('');
+        $data = $this->serializer->serialize($userClone, JsonEncoder::FORMAT);
+
+        return new JsonResponse($data, Response::HTTP_OK, [], true);
+    }
+
+    /**
+     * @Route("/security/register", name="register")
+     * @throws \JsonException
+     */
+    public function registerAction(Request $request): JsonResponse
+    {
+        /** @var User $user */
+        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy([
+            'email' => $request->request->get('username')
+        ]);
+
+        if (!empty($user)) {
+            return new JsonResponse(json_encode(
+                ['error' => 'User is already exists']
+            ), Response::HTTP_BAD_REQUEST, [], true);
+        }
+
+        $userEntity = new User();
+        $userEntity->setEmail($request->request->get('username'));
+        $userEntity->setPlainPassword($request->request->get('password'));
+        $this->getDoctrine()->getManager()->persist($userEntity);
+        $this->getDoctrine()->getManager()->flush();
+
+        $userClone = clone $userEntity;
         $userClone->setPassword('');
         $data = $this->serializer->serialize($userClone, JsonEncoder::FORMAT);
 

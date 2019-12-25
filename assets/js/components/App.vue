@@ -31,14 +31,24 @@
           >
             <a class="nav-link">Home</a>
           </router-link>
-          <router-link
+          <li
+              v-if="!isAuthenticated"
               class="nav-item"
-              tag="li"
-              to="/posts"
-              active-class="active"
           >
-            <a class="nav-link">Posts</a>
-          </router-link>
+            <a
+                class="nav-link"
+                href="/login"
+            >Login</a>
+          </li>
+          <li
+              v-if="!isAuthenticated"
+              class="nav-item"
+          >
+            <a
+                class="nav-link"
+                href="/register"
+            >Register</a>
+          </li>
           <li
               v-if="isAuthenticated"
               class="nav-item"
@@ -70,7 +80,7 @@
       let isAuthenticated = JSON.parse(this.$parent.$el.attributes["data-is-authenticated"].value),
         user = JSON.parse(this.$parent.$el.attributes["data-user"].value);
 
-      let payload = { isAuthenticated: isAuthenticated, user: user };
+      let payload = {isAuthenticated: isAuthenticated, user: user};
       this.$store.dispatch("security/onRefresh", payload);
 
       axios.interceptors.response.use(undefined, (err) => {
