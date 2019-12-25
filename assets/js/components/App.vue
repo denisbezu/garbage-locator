@@ -5,7 +5,7 @@
           class="navbar-brand"
           to="/home"
       >
-        App
+        EcoWalk
       </router-link>
       <button
           class="navbar-toggler"
@@ -47,7 +47,7 @@
             <a
                 class="nav-link"
                 href="/register"
-            >Register</a>
+            >Registration</a>
           </li>
           <li
               v-if="isAuthenticated"

@@ -77,7 +77,7 @@ export default {
     },
     async register({commit}, payload) {
       try {
-        let response = await SecurityAPI.register(payload.email, payload.password);
+        let response = await SecurityAPI.register(payload.email, payload.password, payload.firstname, payload.lastname);
         commit(REGISTRATION_SUCCESS, response.data);
         return response.data;
       } catch (error) {
@@ -103,6 +103,9 @@ export default {
       return role => {
         return state.user.roles.indexOf(role) !== -1;
       }
+    },
+    user(state) {
+      return state.user;
     }
   },
 }

@@ -8,10 +8,12 @@ export default {
       password
     });
   },
-  register(email, password) {
+  register(email, password, firstname, lastname) {
     return axios.post('/api/security/register', qs.stringify({
       username: email,
-      password
+      password,
+      firstname,
+      lastname
     }));
   }
 }

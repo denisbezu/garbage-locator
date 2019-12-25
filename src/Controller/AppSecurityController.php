@@ -62,6 +62,8 @@ final class AppSecurityController extends AbstractController
         $userEntity = new User();
         $userEntity->setEmail($request->request->get('username'));
         $userEntity->setPlainPassword($request->request->get('password'));
+        $userEntity->setFirstname($request->request->get('firstname'));
+        $userEntity->setLastname($request->request->get('lastname'));
         $this->getDoctrine()->getManager()->persist($userEntity);
         $this->getDoctrine()->getManager()->flush();
 
