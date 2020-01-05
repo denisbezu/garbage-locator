@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ImageRepository")
@@ -15,6 +16,7 @@ class Image
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"default"})
      */
     private $id;
 
@@ -29,7 +31,8 @@ class Image
     private $events;
 
     /**
-     * @ORM\Column(type="blob")
+     * @ORM\Column(type="text", length=20000000)
+     * @Groups({"default"})
      */
     private $content;
 

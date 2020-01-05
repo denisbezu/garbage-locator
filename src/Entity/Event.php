@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
@@ -20,11 +21,13 @@ class Event
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"default"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"default"})
      */
     private $type;
 
@@ -35,11 +38,13 @@ class Event
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"default"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"default"})
      */
     private $level;
 
@@ -50,16 +55,19 @@ class Event
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"default"})
      */
     private $status;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Image", inversedBy="events")
+     * @Groups({"default"})
      */
     private $images;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="event")
+     * @Groups({"default"})
      */
     private $comments;
 

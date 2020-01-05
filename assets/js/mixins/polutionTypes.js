@@ -19,3 +19,18 @@ export function getPollutionName(type) {
     return 'Other pollution';
   }
 }
+
+export function getPollutionImageSrc(type) {
+  if (type === WATER) {
+    return '/img/watter_pollution.svg';
+  }
+  if (type === DEFORESTATION) {
+    return '/img/deforestation.png';
+  }
+  if (type === GARBAGE) {
+    return '/img/garbage.png';
+  }
+  if (type === OTHER) {
+    return '/img/other_pollution.png';
+  }
+}

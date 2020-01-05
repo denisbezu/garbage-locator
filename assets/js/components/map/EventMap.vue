@@ -4,7 +4,10 @@
 
     <div class="events-wrapper w-100">
       <div class="event-actions row col-12 py-3">
-        <button class="btn btn-primary" type="button">Add event</button>
+        <button class="btn btn-primary"
+                @click="addEvent"
+                type="button">Add event
+        </button>
         <button class="btn btn-primary ml-3"
                 @click="setPositionToCurrent"
                 type="button">To current position
@@ -40,7 +43,8 @@
         map: null,
         infoWindow: null,
         currentPosition: null,
-        markersConfigured: false
+        markersConfigured: false,
+        markerObjects: []
       }
     },
     computed: {
@@ -49,6 +53,11 @@
       }
     },
     methods: {
+      addEvent() {
+        this.$store.dispatch('events/setOpenedEvent', {
+          type: 'add'
+        });
+      },
       handleLocationError(browserHasGeolocation, infoWindow, pos) {
         infoWindow.setPosition(pos);
         infoWindow.setContent(browserHasGeolocation ?
@@ -85,22 +94,43 @@
           return;
         }
 
-        var infowindow = new google.maps.InfoWindow();
-
-        var marker, i;
+        let marker, i;
 
         for (i = 0; i < self.markers.length; i++) {
           marker = new google.maps.Marker({
             position: new google.maps.LatLng(parseFloat(self.markers[i]['latitude']), parseFloat(self.markers[i]['longitude'])),
-            map: self.map
+            map: self.map,
+            animation: google.maps.Animation.DROP
           });
 
-          google.maps.event.addListener(marker, 'click', (function (marker, i) {
-            return function () {
-              infowindow.setContent(i);
-              infowindow.open(self.map, marker);
+          google.maps.event.addListener(marker, 'click', ((marker, i) => {
+            return () => {
+              if (self.toggleMarkerAnimation(marker, i)) {
+                self.$store.dispatch('events/selectMarker', {
+                  longitude: marker.position.lng(),
+                  latitude: marker.position.lat(),
+                });
+              } else {
+                self.$store.dispatch('events/clearSelectedEvents');
+                self.$store.dispatch('events/setOpenedEvent', false);
+              }
             }
           })(marker, i));
+          self.markerObjects.push(marker);
+        }
+      },
+      toggleMarkerAnimation(marker, i) {
+        this.markerObjects.forEach((item, index) => {
+          if (index !== i) {
+            item.setAnimation(null);
+          }
+        });
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+          return false;
+        } else {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+          return true;
         }
       }
     },

@@ -4,12 +4,22 @@ import {eventsEmmiter} from '../events/emitters';
 export default {
   namespaced: true,
   state: {
-    markers: []
+    markers: [],
+    selectedEvents: [],
+    openedEvent: false
   },
   mutations: {
     setMarkers(state, payload) {
       state.markers = payload;
       eventsEmmiter.$emit('setMarkers');
+    },
+    setSelectedEvents(state, payload) {
+      state.selectedEvents = payload;
+      eventsEmmiter.$emit('setSelectedEvents');
+    },
+    setOpenedEvent(state, payload) {
+      state.openedEvent = payload;
+      eventsEmmiter.$emit('setOpenedEvent', payload);
     }
   },
   actions: {
@@ -35,11 +45,27 @@ export default {
       } catch (error) {
         return null;
       }
+    },
+    async selectMarker({commit}, payload) {
+      let response = await EventsAPI.getEvents(payload.longitude, payload.latitude);
+      commit('setSelectedEvents', response.data);
+    },
+    async clearSelectedEvents({commit}) {
+      commit('setSelectedEvents', []);
+    },
+    async setOpenedEvent({commit}, payload) {
+      commit('setOpenedEvent', payload);
     }
   },
   getters: {
     markers(state) {
       return state.markers;
+    },
+    selectedEvents(state) {
+      return state.selectedEvents;
+    },
+    openedEvent(state) {
+      return state.openedEvent;
     }
   },
 }

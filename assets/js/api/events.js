@@ -15,5 +15,11 @@ export default {
   },
   getMarkers() {
     return axios.post('/api/markers/getAll');
+  },
+  getEvents(longitude, latitude) {
+    return axios.post('/api/events/getByCoordinates', qs.stringify({
+      longitude,
+      latitude
+    }));
   }
 }

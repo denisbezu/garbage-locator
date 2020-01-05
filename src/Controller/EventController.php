@@ -13,7 +13,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Constraints\Json;
 
 /**
  * @Route("/api/events")
@@ -41,11 +43,9 @@ final class EventController extends AbstractController
         $description = $request->request->get('description');
         $images = $request->request->get('images');
 
-
         $imgObjects = [];
         $user = $this->getUser();
         $manager = $this->getDoctrine()->getManager();
-
 
         $marker = $manager->getRepository(Marker::class)->findOneByLngLat($longitude, $latitude);
         if (empty($marker)) {
@@ -81,5 +81,28 @@ final class EventController extends AbstractController
 
         //@TODO
         return new JsonResponse('', Response::HTTP_OK, [], true);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @Route("/getByCoordinates", name="getEventsByCoordinated")
+     */
+    public function getMarkerEvents(Request $request): JsonResponse
+    {
+        $latitude = (float)$request->request->get('latitude');
+        $longitude = (float)$request->request->get('longitude');
+
+        $manager = $this->getDoctrine()->getManager();
+
+        /**
+         * @var Marker $marker
+         */
+        $marker = $manager->getRepository(Marker::class)->findOneByLngLat($longitude, $latitude);
+
+        $events = empty($marker) ? array() : $marker->getEvents();
+        $data = $this->serializer->serialize($events, JsonEncoder::FORMAT, ['groups' => ['default']]);
+
+        return new JsonResponse($data, Response::HTTP_OK, [], true);
     }
 }

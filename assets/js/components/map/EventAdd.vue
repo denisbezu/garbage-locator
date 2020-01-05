@@ -1,5 +1,10 @@
 <template>
-  <div class="event-add">
+  <div class="event-add" v-if="openedEvent !== false && openedEvent.type === 'add'">
+    <button type="button"
+            @click="closeAddEvent"
+            class="close">
+      <span>&times;</span>
+    </button>
     <form enctype="multipart/form-data" ref="eventAddForm">
       <div class="form-group">
         <label for="type">Event type</label>
@@ -90,6 +95,7 @@
         return getPollutionName(type);
       },
       async saveEvent() {
+        const self = this;
         let files = [];
         const toBase64 = file => new Promise((resolve, reject) => {
           const reader = new FileReader();
@@ -107,13 +113,25 @@
           images: files,
           position: this.currentPosition,
           level: this.level
+        }).then(response => {
+          console.log(response);
+          self.closeAddEvent();
         })
       },
-
+      closeAddEvent() {
+        this.$store.dispatch('events/setOpenedEvent', false);
+      }
+    },
+    computed: {
+      openedEvent() {
+        return this.$store.getters['events/openedEvent'];
+      }
     }
   }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+  .close {
+    outline: none;
+  }
 </style>

@@ -14,6 +14,8 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class MarkerRepository extends ServiceEntityRepository
 {
+    const MARKER_PRECISION = 0.0001;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Marker::class);
@@ -22,15 +24,15 @@ class MarkerRepository extends ServiceEntityRepository
     /**
      * @param $longitude
      * @param $latitude
-     * @return Marker|null
+     * @return Marker|int|null
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findOneByLngLat($longitude, $latitude): ?Marker
+    public function findOneByLngLat($longitude, $latitude)
     {
-        $minLongitude = $longitude - 0.001;
-        $maxLongitude = $longitude + 0.001;
-        $minLatitude = $latitude - 0.001;
-        $maxLatitude = $latitude + 0.001;
+        $minLongitude = $longitude - self::MARKER_PRECISION;
+        $maxLongitude = $longitude + self::MARKER_PRECISION;
+        $minLatitude = $latitude - self::MARKER_PRECISION;
+        $maxLatitude = $latitude + self::MARKER_PRECISION;
 
         return $this->createQueryBuilder('m')
             ->andWhere('m.longitude <= :maxLongitude')
@@ -41,7 +43,6 @@ class MarkerRepository extends ServiceEntityRepository
             ->setParameter('maxLongitude', $maxLongitude)
             ->setParameter('minLatitude', $minLatitude)
             ->setParameter('maxLatitude', $maxLatitude)
-            ->getQuery()
-            ->getOneOrNullResult();
+            ->getQuery()->getOneOrNullResult();
     }
 }
