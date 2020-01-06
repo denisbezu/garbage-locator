@@ -31,19 +31,31 @@
           <h5 class="card-title">{{ getPollutionName(openedEvent.type) }}</h5>
           <p class="card-text">{{ openedEvent.description }}</p>
           <div class="d-flex justify-content-between align-items-center">
-            <a href="#" class="btn btn-primary">Action?</a>
+            <a href="#"
+               @click.stop.prevent="showAddComment = !showAddComment"
+               class="btn btn-primary">Add comment</a>
             <span class="badge badge-warning">{{ openedEvent.level }}</span>
           </div>
         </div>
       </div>
+      <add-comment v-if="showAddComment"></add-comment>
+      <event-comments :comments="openedEvent.comments"></event-comments>
     </div>
   </div>
 </template>
 
 <script>
   import {getPollutionName} from '../../mixins/polutionTypes';
+  import EventComments from './comments/EventComments';
+  import AddComment from './comments/AddComment';
+  import {eventsEmmiter} from "../../events/emitters";
 
   export default {
+    data() {
+      return {
+        showAddComment: false
+      }
+    },
     methods: {
       closeAddEvent() {
         this.$store.dispatch('events/setOpenedEvent', false);
@@ -56,6 +68,16 @@
       openedEvent() {
         return this.$store.getters['events/openedEvent'];
       }
+    },
+    components: {
+      EventComments,
+      AddComment
+    },
+    created() {
+      const self = this;
+      eventsEmmiter.$on('addComment', () => {
+        self.showAddComment = false;
+      });
     }
   }
 </script>

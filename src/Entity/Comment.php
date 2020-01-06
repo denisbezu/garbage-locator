@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
@@ -15,11 +16,13 @@ class Comment
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"default"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
+     * @Groups({"default"})
      */
     private $user;
 
@@ -30,11 +33,13 @@ class Comment
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"default"})
      */
     private $comment;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"default"})
      */
     private $score;
 

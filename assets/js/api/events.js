@@ -1,6 +1,5 @@
 import axios from 'axios';
 import qs from 'qs';
-import $ from 'jquery';
 
 export default {
   addEvent(type, description, images, position, level) {
