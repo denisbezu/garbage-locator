@@ -38,7 +38,7 @@ final class AccountController extends AbstractController
         $this->getDoctrine()->getManager()->merge($userClone);
         $this->getDoctrine()->getManager()->flush();
 
-        $data = $this->serializer->serialize($userClone, JsonEncoder::FORMAT);
+        $data = $this->serializer->serialize($userClone, JsonEncoder::FORMAT, ['groups' => ['default']]);
 
         return new JsonResponse($data, Response::HTTP_OK, [], true);
     }
@@ -69,7 +69,7 @@ final class AccountController extends AbstractController
 
         $userClone = clone $userEntity;
         $userClone->setPassword('');
-        $data = $this->serializer->serialize($userClone, JsonEncoder::FORMAT);
+        $data = $this->serializer->serialize($userClone, JsonEncoder::FORMAT, ['groups' => ['default']]);
 
         return new JsonResponse($data, Response::HTTP_OK, [], true);
     }
