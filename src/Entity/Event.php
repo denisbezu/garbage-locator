@@ -71,6 +71,17 @@ class Event
      */
     private $comments;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\EventResult", mappedBy="event", cascade={"persist", "remove"})
+     * @Groups({"default"})
+     */
+    private $eventResult;
+
+    /**
+     * @Groups({"default"})
+     */
+    private $creator_id;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -206,6 +217,32 @@ class Event
             if ($comment->getEvent() === $this) {
                 $comment->setEvent(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getCreatorId(): ?int
+    {
+        if ($this->creator != null) {
+            return $this->creator->getId();
+        }
+
+        return null;
+    }
+
+    public function getEventResult(): ?EventResult
+    {
+        return $this->eventResult;
+    }
+
+    public function setEventResult(EventResult $eventResult): self
+    {
+        $this->eventResult = $eventResult;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $eventResult->getEvent()) {
+            $eventResult->setEvent($this);
         }
 
         return $this;

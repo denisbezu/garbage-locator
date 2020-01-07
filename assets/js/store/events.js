@@ -55,6 +55,10 @@ export default {
     },
     async setOpenedEvent({commit}, payload) {
       commit('setOpenedEvent', payload);
+    },
+    async toggleEventUserResult({commit}, payload) {
+      let response = await EventsAPI.toggleEventResult(payload);
+      commit('setOpenedEvent', response.data);
     }
   },
   getters: {

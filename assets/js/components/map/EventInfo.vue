@@ -34,6 +34,12 @@
             <a href="#"
                @click.stop.prevent="showAddComment = !showAddComment"
                class="btn btn-primary">Add comment</a>
+            <a href="#"
+               v-if="user.id !== openedEvent.creator_id && openedEvent.status === 0"
+               :class="{'btn-success': !hasUserMark, 'btn-warning': hasUserMark}"
+               class="btn btn-success"
+               @click.stop.prevent="toggleRateEvent"
+              v-text="hasUserMark ? 'Unmark as done' : 'Mark as done'"></a>
             <span class="badge badge-warning">{{ openedEvent.level }}</span>
           </div>
         </div>
@@ -48,7 +54,8 @@
   import {getPollutionName} from '../../mixins/polutionTypes';
   import EventComments from './comments/EventComments';
   import AddComment from './comments/AddComment';
-  import {eventsEmmiter} from "../../events/emitters";
+  import {eventsEmmiter} from '../../events/emitters';
+  import user from '../../mixins/user';
 
   export default {
     data() {
@@ -63,12 +70,22 @@
       getPollutionName(type) {
         return getPollutionName(type);
       },
+      toggleRateEvent() {
+        this.$store.dispatch('events/toggleEventUserResult', this.openedEvent.id);
+      }
     },
     computed: {
       openedEvent() {
         return this.$store.getters['events/openedEvent'];
+      },
+      hasUserMark() {
+        const self = this;
+        return this.openedEvent.eventResult.userEventResults.find(userEventResult => {
+          return userEventResult.userId === self.user.id;
+        });
       }
     },
+    mixins: [user],
     components: {
       EventComments,
       AddComment

@@ -5,9 +5,11 @@ namespace App\Controller;
 
 
 use App\Entity\Event;
+use App\Entity\EventResult;
 use App\Entity\Image;
 use App\Entity\Marker;
 use App\Entity\User;
+use App\Entity\UserEventResult;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -77,6 +79,12 @@ final class EventController extends AbstractController
         }
 
         $manager->persist($event);
+
+        $eventResult = new EventResult();
+        $eventResult->setEvent($event)
+            ->setAdminApproved(false);
+        $manager->persist($eventResult);
+
         $manager->flush();
 
         //@TODO
@@ -102,6 +110,48 @@ final class EventController extends AbstractController
 
         $events = empty($marker) ? array() : $marker->getEvents();
         $data = $this->serializer->serialize($events, JsonEncoder::FORMAT, ['groups' => ['default']]);
+
+        return new JsonResponse($data, Response::HTTP_OK, [], true);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @Route("/toggleResult", name="toggleResult")
+     */
+    public function toggleEventResult(Request $request): JsonResponse
+    {
+        $eventId = (int)$request->request->get('eventId');
+        $manager = $this->getDoctrine()->getManager();
+
+        /** @var Event $event */
+        $event = $manager->getRepository(Event::class)->find($eventId);
+        $eventResult = $event->getEventResult();
+
+        $userEventResultValues = $eventResult->getUserEventResults();
+        /** @var UserEventResult $userEventResultValue */
+        foreach ($userEventResultValues as $userEventResultValue) {
+            if ($userEventResultValue->getUser()->getId() == $this->getUser()->getId()
+                && $userEventResultValue->getEventResult()->getId() == $eventResult->getId()) {
+                $userEventResult = $userEventResultValue;
+                break;
+            }
+        }
+
+        if (empty($userEventResult)) {
+            $userEventResult = new UserEventResult();
+            $userEventResult->setUser($this->getUser());
+            $userEventResult->setEventResult($eventResult);
+            $manager->persist($userEventResult);
+        } else {
+            $manager->remove($userEventResult);
+        }
+
+        $manager->flush();
+        $manager->refresh($eventResult);
+        $manager->refresh($event);
+
+        $data = $this->serializer->serialize($event, JsonEncoder::FORMAT, ['groups' => ['default']]);
 
         return new JsonResponse($data, Response::HTTP_OK, [], true);
     }

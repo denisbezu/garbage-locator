@@ -20,5 +20,10 @@ export default {
       longitude,
       latitude
     }));
+  },
+  toggleEventResult(eventId) {
+    return axios.post('/api/events/toggleResult', qs.stringify({
+      eventId
+    }));
   }
 }
