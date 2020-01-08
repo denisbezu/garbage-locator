@@ -1,3 +1,15 @@
+@import  './navigation',
+         './home.scss',
+         './login.scss',
+         './register.scss',
+         './animations.scss';
+
+ 
 body {
-  background: white;
+  background: #f8f9fa;
+}
+.alert {
+  color: red;
+  padding-left: 0 !important;
+  animation: blink 7s forwards;
 }

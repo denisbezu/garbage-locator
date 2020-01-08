@@ -1,0 +1,15 @@
+.register-page {
+    margin-top: 50px;
+
+
+    p {
+        color: rgb(32, 133, 57);
+        opacity: 0;
+        animation: blink 7s forwards;
+    }
+
+    .reg-btn {
+        background:  rgb(32, 133, 57);
+        color: #fff;
+    }
+}
