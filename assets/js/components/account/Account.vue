@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="container login-page account-page">
     <div class="row col">
-      <h1>My account</h1>
+      <p>My account</p>
     </div>
 
     <div class="card" v-if="isAuthenticated && user !== null">
@@ -32,7 +32,7 @@
         <button
             :disabled="user.email.length === 0 || user.firstname.length === 0 || user.lastname.length === 0 || isLoading"
             type="button"
-            class="btn btn-primary"
+            class="btn"
             @click="saveAccountSettings()">
           Save
         </button>
@@ -40,10 +40,10 @@
     </div>
 
     <div class="row col">
-      <h2 class="m-0 pt-3">Change password</h2>
+      <p class="m-0 pt-3">Change password</p>
     </div>
 
-    <div class="card mt-3">
+    <div class="card mt-3 password-card">
       <form class="card-body">
         <div class="form-group">
           <label for="password">Password</label>
@@ -64,7 +64,7 @@
         <button
             :disabled="password !== repeatPassword || password.length < 6"
             type="button"
-            class="btn btn-primary"
+            class="btn"
             @click="savePasswordSettings()"
         >
           Save
@@ -145,5 +145,7 @@
 </script>
 
 <style scoped>
-
+ .account-page {
+   margin-bottom: 40px;
+ }
 </style>
