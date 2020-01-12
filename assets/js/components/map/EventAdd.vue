@@ -60,7 +60,7 @@
       </div>
       <button type="button"
               @click="saveEvent"
-              class="btn btn-secondary">Save
+              class="btn">Save
       </button>
     </form>
   </div>

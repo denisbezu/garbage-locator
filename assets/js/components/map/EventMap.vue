@@ -4,11 +4,11 @@
 
     <div class="events-wrapper w-100">
       <div class="event-actions row col-12 py-3">
-        <button class="btn btn-primary"
+        <button class="btn map-btn"
                 @click="addEvent"
                 type="button">Add event
         </button>
-        <button class="btn btn-primary ml-3"
+        <button class="btn map-btn ml-3"
                 @click="setPositionToCurrent"
                 type="button">To current position
         </button>
@@ -173,12 +173,4 @@
   }
 </script>
 
-
-<style scoped lang="scss">
-  .map-wrapper {
-
-    .map-inner {
-      min-height: 400px;
-    }
-  }
-</style>
+ 

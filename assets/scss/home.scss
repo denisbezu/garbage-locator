@@ -1,0 +1,23 @@
+.home-page {
+    margin-top: 50px;
+
+    h1 {
+        color: rgb(32, 133, 57);
+        animation: blink 7s forwards; 
+    }
+    p {
+        color: rgb(32, 133, 57);
+        opacity: 0;
+        animation: blink 7s  forwards; 
+    }
+}
+
+.intro-img-holder {
+    .intro {
+        margin: 0 auto;
+        width: 50%;
+        display: block;
+    }
+}
+
+

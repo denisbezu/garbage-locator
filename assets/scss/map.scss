@@ -1,0 +1,26 @@
+.map-inner {
+    min-height: 400px;
+    margin: 30px 0 0;
+    box-shadow: 0px 3px 13px 0px rgba(85, 85, 85, 0.75);
+}
+
+.event-actions {
+    margin: 15px 0;
+}
+
+.event-add {
+    margin-bottom: 40px;
+}
+
+.custom-file-label::after {
+    background:  rgb(32, 133, 57);
+    color: #fff;
+
+    &:hover {
+        cursor: pointer;
+        opacity: 0.7;
+    }
+}
+
+
+

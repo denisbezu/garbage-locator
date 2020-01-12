@@ -1,11 +1,11 @@
 <template>
-  <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div>
+    <nav class="navbar navbar-expand-lg navbar-light">
       <router-link
           class="navbar-brand"
           to="/home"
       >
-        EcoWalk
+        <img class="logo" alt="logo" src="/img/logo.png">
       </router-link>
       <button
           class="navbar-toggler"

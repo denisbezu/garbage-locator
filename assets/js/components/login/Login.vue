@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="container login-page">
     <div class="row col">
-      <h1>Login</h1>
+      <p>Please, log in</p>
     </div>
 
     <div class="card">
@@ -11,6 +11,7 @@
             <input
                 v-model="email"
                 type="email"
+                 placeholder="Email address"
                 class="form-control"
             >
           </div>
@@ -18,6 +19,7 @@
             <input
                 v-model="password"
                 type="password"
+                placeholder="Password"
                 class="form-control"
             >
           </div>
@@ -25,7 +27,7 @@
             <button
                 :disabled="email.length === 0 || password.length === 0 || isLoading"
                 type="button"
-                class="btn btn-primary"
+                class="btn log-btn"
                 @click="performLogin()"
             >
               Login
