@@ -5,6 +5,7 @@ import Home from '../components/home/Home';
 import Login from '../components/login/Login';
 import Register from '../components/login/Register';
 import Account from "../components/account/Account";
+import About from "../components/about/About";
 
 Vue.use(VueRouter);
 
@@ -37,9 +38,14 @@ let router = new VueRouter({
       component: Account,
       meta: {
         requiresAuth: true,
-        meta: {
-          title: 'Eco walk - My account'
-        }
+        title: 'Eco walk - My account'
+      }
+    },
+    {
+      path: '/about',
+      component: About,
+      meta: {
+        title: 'Eco walk - About'
       }
     },
     {

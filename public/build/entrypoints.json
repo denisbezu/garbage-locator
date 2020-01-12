@@ -1,0 +1,20 @@
+{
+  "entrypoints": {
+    "app": {
+      "css": [
+        "/build/vendors~app.css",
+        "/build/app.css"
+      ],
+      "js": [
+        "/build/vendors~app.js",
+        "/build/app.js"
+      ]
+    }
+  },
+  "integrity": {
+    "/build/vendors~app.css": "sha384-78S2VUMj3Q71Fc9cWi30gDP1+biruR9Q17L1Ma2baDhoQbH+hcL4EGWzceGiMzIV",
+    "/build/app.css": "sha384-86rTm+GFE54Xcmo28fuMjCHIfTDRhXYFZRfSUihbOe5FbQc0OALolCaAeaWd8T9v",
+    "/build/vendors~app.js": "sha384-GO8q/gYHxmkms49S0bxZDOVjZNAuRaXzH49Fb+5bOFQ+WKBHmp5/J4+AHEdjg9W2",
+    "/build/app.js": "sha384-MObTsyDyEbj+OTO8BzvBxrZt4gbTJ04xsBzuRXYzY4prCo7bMVpQ3LJm/CPWfKz/"
+  }
+}

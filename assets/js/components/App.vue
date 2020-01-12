@@ -58,6 +58,14 @@
           >
             <a class="nav-link">Registration</a>
           </router-link>
+          <router-link
+              class="nav-item"
+              tag="li"
+              to="/about"
+              active-class="active"
+          >
+            <a class="nav-link">About</a>
+          </router-link>
           <li
               v-if="isAuthenticated"
               class="nav-item"
