@@ -11,7 +11,7 @@
             <input
                 v-model="email"
                 type="email"
-                 placeholder="Email address"
+                placeholder="Email address"
                 class="form-control"
             >
           </div>
@@ -48,7 +48,7 @@
         v-else-if="hasError"
         class="row col"
     >
-      <error-message :error="error" />
+      <error-message :error="error"/>
     </div>
   </div>
 </template>

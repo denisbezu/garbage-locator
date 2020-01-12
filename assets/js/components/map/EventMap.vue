@@ -44,7 +44,8 @@
         infoWindow: null,
         currentPosition: null,
         markersConfigured: false,
-        markerObjects: []
+        markerObjects: [],
+        currentPositionIcon: 'https://www.robotwoods.com/dev/misc/bluecircle.png'
       }
     },
     computed: {
@@ -74,8 +75,10 @@
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
+            if (self.currentPosition === null) {
+              self.addCurrentPositionMarker(pos);
+            }
             self.currentPosition = pos;
-            console.log(pos);
             self.map.setCenter(pos);
           }, () => {
             self.handleLocationError(true, self.infoWindow, self.map.getCenter());
@@ -132,6 +135,20 @@
           marker.setAnimation(google.maps.Animation.BOUNCE);
           return true;
         }
+      },
+      removeMarkerAnimation() {
+        this.markerObjects.forEach(marker => {
+          marker.setAnimation(null);
+        });
+      },
+      addCurrentPositionMarker(pos) {
+        const self = this;
+        const marker = new google.maps.Marker({
+          position: new google.maps.LatLng(parseFloat(pos.lat), parseFloat(pos.lng)),
+          map: self.map,
+          animation: google.maps.Animation.DROP,
+          icon: self.currentPositionIcon
+        });
       }
     },
     mounted() {
@@ -140,7 +157,6 @@
       const interval = setInterval(() => {
         if (window.mapInit) {
           clearInterval(interval);
-
           self.map = new google.maps.Map(self.$refs.map, {
             center: {lat: defaultLatitude, lng: defaultLongitude},
             zoom: defaultZoom,
@@ -163,6 +179,19 @@
 
       eventsEmmiter.$on('setMarkers', () => {
         self.setUpMarkers();
+      });
+
+      eventsEmmiter.$on('cleanMarkers', () => {
+        self.markerObjects.forEach(marker => {
+          marker.setMap(null);
+        });
+        self.$store.dispatch('events/cleanMarkers').then(() => {
+          self.$store.dispatch('events/fetchMarkers');
+          self.markersConfigured = false;
+          self.markerObjects = [];
+          self.removeMarkerAnimation();
+          self.$store.dispatch('events/clearSelectedEvents');
+        });
       });
     },
     components: {

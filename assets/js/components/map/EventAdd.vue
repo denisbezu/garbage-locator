@@ -69,6 +69,7 @@
 
 <script>
   import {WATER, DEFORESTATION, OTHER, GARBAGE, getPollutionName} from '../../mixins/polutionTypes';
+  import {eventsEmmiter} from "../../events/emitters";
 
   export default {
     props: ['currentPosition'],
@@ -115,8 +116,9 @@
           level: this.level
         }).then(response => {
           console.log(response);
+          eventsEmmiter.$emit('cleanMarkers');
           self.closeAddEvent();
-        })
+        });
       },
       closeAddEvent() {
         this.$store.dispatch('events/setOpenedEvent', false);

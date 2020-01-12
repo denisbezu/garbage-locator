@@ -59,6 +59,9 @@ export default {
     async toggleEventUserResult({commit}, payload) {
       let response = await EventsAPI.toggleEventResult(payload);
       commit('setOpenedEvent', response.data);
+    },
+    async cleanMarkers({commit}, payload) {
+      commit('setMarkers', []);
     }
   },
   getters: {
