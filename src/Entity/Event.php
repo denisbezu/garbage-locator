@@ -32,7 +32,7 @@ class Event
     private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Marker", inversedBy="events")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Marker", inversedBy="events", fetch="EAGER")
      */
     private $marker;
 
@@ -49,7 +49,7 @@ class Event
     private $level;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="events")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="events", fetch="EAGER")
      */
     private $creator;
 
@@ -60,19 +60,19 @@ class Event
     private $status;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Image", inversedBy="events")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Image", inversedBy="events", fetch="EAGER")
      * @Groups({"default"})
      */
     private $images;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="event")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="event", fetch="EAGER")
      * @Groups({"default"})
      */
     private $comments;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\EventResult", mappedBy="event", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\EventResult", mappedBy="event", cascade={"persist", "remove"}, fetch="EAGER")
      * @Groups({"default"})
      */
     private $eventResult;

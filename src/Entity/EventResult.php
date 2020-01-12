@@ -20,7 +20,7 @@ class EventResult
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Event", inversedBy="eventResult", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Event", inversedBy="eventResult", cascade={"persist", "remove"}, fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $event;
@@ -38,7 +38,7 @@ class EventResult
     private $admin_approved;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UserEventResult", mappedBy="eventResult")
+     * @ORM\OneToMany(targetEntity="App\Entity\UserEventResult", mappedBy="eventResult", fetch="EAGER")
      * @Groups({"default"})
      */
     private $userEventResults;

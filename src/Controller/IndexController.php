@@ -24,7 +24,7 @@ class IndexController extends AbstractController
     /**
      * @throws JsonException
      *
-     * @Route("/{vueRouting}", requirements={"vueRouting"="^(?!api|_(profiler|wdt)).*"}, name="index")
+     * @Route("/{vueRouting}", requirements={"vueRouting"="^(?!api|\/admin|_(profiler|wdt)).*"}, name="index")
      */
     public function indexAction(): Response
     {

@@ -1,0 +1,18 @@
+{% extends "admin/dashboard.html.twig" %}
+
+{% block content %}
+
+    {{ dump(event) }}
+
+    <form action="{{ path("admin_event_edit", {id: event.id}) }}" method="post">
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea class="form-control"  id="description" name="description" rows="5">{{ event.description }}</textarea>
+        </div>
+
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+{% endblock %}

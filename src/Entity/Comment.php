@@ -21,13 +21,13 @@ class Comment
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments", fetch="EAGER")
      * @Groups({"default"})
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="comments", fetch="EAGER")
      */
     private $event;
 
@@ -44,12 +44,12 @@ class Comment
     private $score;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Comment", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Comment", inversedBy="comments", fetch="EAGER")
      */
     private $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="parent", fetch="EAGER")
      */
     private $comments;
 

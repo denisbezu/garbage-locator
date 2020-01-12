@@ -66,12 +66,12 @@ class User implements UserInterface
     private $lastname;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="creator")
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="creator", fetch="EAGER")
      */
     private $events;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user", fetch="EAGER")
      */
     private $comments;
 
