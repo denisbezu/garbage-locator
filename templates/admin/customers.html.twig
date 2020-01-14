@@ -9,6 +9,7 @@
             <th>Firstname</th>
             <th>Lastname</th>
             <th>Email</th>
+            <th>Role</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -20,6 +21,7 @@
                 <td>{{ customer.firstname }}</td>
                 <td>{{ customer.lastname }}</td>
                 <td>{{ customer.email }}</td>
+                <td>{% if 'ROLE_ADMIN' in customer.getRoles() %}Admin{% else %}User{% endif %}</td>
                 <td>
                     <a href="{{ path("admin_customer", {id: customer.id}) }}" class="btn btn-secondary">View</a>
                 </td>

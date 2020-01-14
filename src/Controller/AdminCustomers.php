@@ -8,10 +8,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class AdminCustomers extends AbstractController
 {
     public function __construct()
     {
+
     }
 
     /**
@@ -59,6 +61,12 @@ class AdminCustomers extends AbstractController
 
         if ($pswd = $request->get('password')) {
             $customer->setPassword($pswd);
+        }
+
+        if ($request->get('isAdmin')) {
+            $customer->setRoles(['ROLE_ADMIN']);
+        } else {
+            $customer->setRoles([]);
         }
 
         $entityManager->flush();
