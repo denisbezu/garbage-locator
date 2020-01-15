@@ -1,47 +1,47 @@
 <template>
-  <div>
+  <div class="container register-page">
     <div class="row col">
-      <h1>Register</h1>
+      <p>Please, register your profile</p>
     </div>
 
     <div class="card">
       <form class="card-body">
-        <div class="form-group">
-          <label for="email">Email address</label>
+        <div class="form-group"> 
           <input
               v-model="email"
               type="email"
+              placeholder="Email address"
               class="form-control"
           >
         </div>
-        <div class="form-group">
-          <label for="firstname">Firstname</label>
+        <div class="form-group"> 
           <input
               v-model="firstname"
               type="text"
+              placeholder="Firstname"
               class="form-control"
           >
         </div>
         <div class="form-group">
-          <label for="lastname">Lastname</label>
           <input
               v-model="lastname"
               type="text"
+              placeholder="Lastname"
               class="form-control"
           >
         </div>
         <div class="form-group">
-          <label for="password">Password</label>
           <input
               v-model="password"
               type="password"
+              placeholder="Password"
               class="form-control"
           >
         </div>
         <button
             :disabled="email.length === 0 || password.length === 0 || isLoading"
             type="button"
-            class="btn btn-primary"
+            class="btn reg-btn"
             @click="performRegister()"
         >
           Register

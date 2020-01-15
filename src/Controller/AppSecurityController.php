@@ -11,9 +11,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\VarDumper\VarDumper;
 
 /**
  * @Route("/api")
@@ -69,6 +69,11 @@ final class AppSecurityController extends AbstractController
 
         $userClone = clone $userEntity;
         $userClone->setPassword('');
+
+        $token = new UsernamePasswordToken($userEntity, null, 'main', $userEntity->getRoles());
+        $this->get('security.token_storage')->setToken($token);
+        $this->get('session')->set('_security_main', serialize($token));
+
         $data = $this->serializer->serialize($userClone, JsonEncoder::FORMAT, ['groups' => ['default']]);
 
         return new JsonResponse($data, Response::HTTP_OK, [], true);

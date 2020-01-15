@@ -1,6 +1,6 @@
 <template>
   <div
-      class="alert alert-danger"
+      class="alert"
       role="alert"
   >
     {{ error.response.data.error }}
