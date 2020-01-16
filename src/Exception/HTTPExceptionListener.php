@@ -26,7 +26,7 @@ final class HTTPExceptionListener
     {
         $exception = $event->getException();
 
-        if (($exception instanceof AccessDeniedHttpException) || $exception->getStatusCode() == 401) {
+        if (($exception instanceof AccessDeniedHttpException) || (method_exists($exception, 'getStatusCode') && $exception->getStatusCode() == 401)) {
             $response = new RedirectResponse($this->router->generate('index', ['vueRouting' => 'login']));
             $event->setResponse($response);
             return;

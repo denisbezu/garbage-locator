@@ -4,15 +4,106 @@
 
     {{ dump(event) }}
 
-    <form action="{{ path("admin_event_edit", {id: event.id}) }}" method="post">
-        <div class="form-group">
-            <label for="description">Description:</label>
-            <textarea class="form-control"  id="description" name="description" rows="5">{{ event.description }}</textarea>
+    {% set types = ['WATER', 'DEFORESTATION', 'GARBAGE', 'OTHER'] %}
+    {% set levels = [1, 2, 3, 4] %}
+
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#event">Event</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#comments">Comments</a>
+        </li>
+
+        <li class="nav-item">
+            <a href="#images" class="nav-link"  data-toggle="tab">Images</a>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane active container" id="event">
+            <div>
+                <span>Creator:</span> <a href="{{ path('admin_customer', {id: event.creator.id}) }}">{{ event.creator.firstname ~ event.creator.lastname }}</a>
+            </div>
+
+            <form action="{{ path("admin_event_edit", {id: event.id}) }}" method="post">
+
+                <div class="form-group">
+                    <label for="type">Type:</label>
+                    <select class="form-control"  id="type" name="type">
+                        {% for type in types %}
+                            {% if type == event.type %}
+                                <option value="{{ type }}" selected>{{ type }}</option>
+                            {% else %}
+                                <option value="{{ type }}">{{ type }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="type">Level:</label>
+                    <select class="form-control"  id="level" name="level">
+                        {% for level in levels %}
+                            {% if level == event.level %}
+                                <option value="{{ level }}" selected>{{ level }}</option>
+                            {% else %}
+                                <option value="{{ level }}">{{ level }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea class="form-control"  id="description" name="description" rows="5">{{ event.description }}</textarea>
+                </div>
+
+
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div class="tab-pane container" id="comments">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="page-header">
+                            <h6 class="float-right">{{ event.getComments().unwrap().toArray()|length }} comments</h6> <h1>Comments </h1>
+                        </div>
+                        <div class="comments-list">
+
+                            {% if event.getComments().isEmpty() == false %}
+                                {% for comment in event.getComments().unwrap().toArray() %}
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <div>
+                                                <b>{{ comment.user.firstname ~ comment.user.lastname }}</b>
+                                            </div>
+                                            <div>
+                                                {{ comment.comment }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
+        <div class="tab-pane active container" id="images">
+
+        </div>
+    </div>
 
 
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
 
 {% endblock %}
