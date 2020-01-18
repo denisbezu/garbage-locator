@@ -2,15 +2,16 @@
 
 {% block content %}
 
-    <div>
-        <a href="{{ path("admin_event", {id: comment.event.id}) }}" class="btn btn-dark">Event</a>
-    </div>
-
-    <div>
-        <a href="{{ path("admin_customer", {id: comment.user.id}) }}"  class="btn btn-dark">Customer</a>
-    </div>
-
     <form action="{{ path("admin_comment_edit", {id: comment.id}) }}" method="post">
+
+        <div class="form-group">
+            <a href="{{ path("admin_event", {id: comment.event.id}) }}" target="_blank" class="btn btn-dark">Event</a>
+        </div>
+
+        <div class="form-group">
+            <a href="{{ path("admin_customer", {id: comment.user.id}) }}" target="_blank"  class="btn btn-dark">Customer</a>
+        </div>
+
         <div class="form-group">
             <label for="comment">Comment:</label>
             <textarea class="form-control"  id="comment" name="comment" rows="5">{{ comment.comment }}</textarea>

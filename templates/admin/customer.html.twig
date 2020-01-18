@@ -63,7 +63,13 @@
                                 <td>{{ event.id }}</td>
                                 <td>{{ event.description|slice(0, 25) }}</td>
                                 <td>{{ event.type }}</td>
-                                <td>{{ event.status }}</td>
+                                <td>
+                                    {% if event.status == 1 %}
+                                        Finished
+                                    {% else %}
+                                        Opened
+                                    {% endif %}
+                                </td>
                                 <td>
                                     <a href="{{ path("admin_event", {id: event.id}) }}" class="btn btn-secondary">View</a>
                                 </td>
