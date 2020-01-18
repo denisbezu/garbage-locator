@@ -2,7 +2,8 @@
 
 {% block content %}
 
-    {{ dump(event) }}
+    {#{{ dump(event) }}#}
+
 
     {% set types = ['WATER', 'DEFORESTATION', 'GARBAGE', 'OTHER'] %}
     {% set levels = [1, 2, 3, 4] %}
@@ -84,8 +85,11 @@
                                             <div>
                                                 <b>{{ comment.user.firstname ~ comment.user.lastname }}</b>
                                             </div>
-                                            <div>
+                                            <p>
                                                 {{ comment.comment }}
+                                            </p>
+                                            <div>
+                                                <small><a href="{{ path('admin_comment', {id: comment.id}) }}">Edit comment</a></small>
                                             </div>
                                         </div>
                                     </div>
@@ -99,11 +103,38 @@
 
         </div>
 
-        <div class="tab-pane active container" id="images">
+        <div class="tab-pane container" id="images">
+            {% if event.getImages().isEmpty() == false %}
 
+                <div class="container">
+
+                    <div class="row">
+                        {% for image in event.getImages().unwrap().toArray() %}
+                            <div class="col-lg-4 col-md-3 col-sm-2 image-container">
+                                <img src="{{ image.content }}" alt="{{ image.name }}" class="img-fluid mt-3 border">
+                                <div>
+                                    <button class="btn btn-danger float-right mt-2" data-action-delete data-id-image="{{ image.id }}">
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+            {% endif %}
         </div>
     </div>
 
 
 
+{% endblock %}
+
+{% block scipts %}
+    {{ parent() }}
+    <script>
+        var controllerUrl = "{{ path('admin_event_delete_image') }}"
+    </script>
+    <script src="{{ asset('js/event.js') }}"></script>
 {% endblock %}
