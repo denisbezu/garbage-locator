@@ -26,7 +26,7 @@ class Image
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="images")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="images", fetch="EAGER")
      */
     private $events;
 

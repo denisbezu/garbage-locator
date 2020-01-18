@@ -33,7 +33,7 @@ class Marker
     private $longitude;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="marker")
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="marker", fetch="EAGER")
      */
     private $events;
 

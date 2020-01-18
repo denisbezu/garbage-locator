@@ -1,0 +1,31 @@
+{% extends "admin/dashboard.html.twig" %}
+
+{% block content %}
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for comment in comments %}
+            <tr>
+                <td>{{ comment.id }}</td>
+                <td>{{ comment.user.firstname }}</td>
+                <td>{{ comment.user.lastname }}</td>
+                <td>{{ comment.user.email }}</td>
+                <td>
+                    <a href="{{ path("admin_comment", {id: comment.id}) }}" class="btn btn-secondary">View</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

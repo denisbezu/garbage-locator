@@ -1,0 +1,47 @@
+html, body {
+    height: 100%;
+}
+
+.container-main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.container-page {
+    height: 100%;
+    display: flex;
+}
+
+.container-left-side-bar {
+    width: 300px;
+    background: #363a41;
+}
+
+.container-left-side-bar li {
+    background: #363a41;
+}
+
+.container-left-side-bar li:hover {
+    background: #202226;
+}
+
+.container-left-side-bar li a {
+    color: white;
+}
+
+.container-content {
+    padding: 20px;
+    width: 100%;
+}
+
+.comments-list .media{
+    border-bottom: 1px dotted #ccc;
+    padding: 25px 0;
+}
+
+.tab-content {
+    padding: 50px 0;
+}
+

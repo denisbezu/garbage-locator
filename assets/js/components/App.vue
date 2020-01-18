@@ -61,8 +61,23 @@
           >
             <a class="nav-link">About</a>
           </router-link>
-          <li v-if="isAuthenticated" class="nav-item">
-            <a class="nav-link" href="/api/security/logout">Logout</a>
+        <li
+                v-if="isAuthenticated && isAdmin"
+                class="nav-item"
+        >
+            <a
+                    class="nav-link"
+                    href="/admin"
+            >Admin panel</a>
+        </li>
+          <li
+              v-if="isAuthenticated"
+              class="nav-item"
+          >
+            <a
+                class="nav-link"
+                href="/api/security/logout"
+            >Logout</a>
           </li>
         </ul>
       </div>
@@ -86,7 +101,13 @@ export default {
   computed: {
     isAuthenticated() {
       return this.$store.getters["security/isAuthenticated"];
-    }
+    },
+      isAdmin() {
+          return this.isAuthenticated && this.user.roles.includes('ROLE_ADMIN');
+      },
+      user() {
+          return this.$store.getters['security/user'];
+      }
   },
   methods: {
     navcollapse: function() {

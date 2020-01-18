@@ -1,0 +1,32 @@
+{% extends "admin/dashboard.html.twig" %}
+
+{% block content %}
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for customer in customers %}
+            <tr>
+                <td>{{ customer.id }}</td>
+                <td>{{ customer.firstname }}</td>
+                <td>{{ customer.lastname }}</td>
+                <td>{{ customer.email }}</td>
+                <td>{% if 'ROLE_ADMIN' in customer.getRoles() %}Admin{% else %}User{% endif %}</td>
+                <td>
+                    <a href="{{ path("admin_customer", {id: customer.id}) }}" class="btn btn-secondary">View</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

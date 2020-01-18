@@ -1,0 +1,46 @@
+{% extends "admin/dashboard.html.twig" %}
+
+{% block content %}
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>AC</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for event in events %}
+            <tr>
+                <td>{{ event.id }}</td>
+                <td>{{ event.description|slice(0, 25) }}</td>
+                <td>{{ event.type }}</td>
+                <td>
+                    {% if event.status == 1 %}
+                        Finished
+                    {% else %}
+                        Opened
+                    {% endif %}
+
+                </td>
+                <td>
+                    {% if event.id in eventsApprovementCount|keys %}
+                        {{ eventsApprovementCount[event.id] }}
+                    {% else %}
+                        0
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path("admin_event", {id: event.id}) }}" class="btn btn-secondary">View</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -18,12 +18,12 @@ class UserEventResult
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", fetch="EAGER")
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\EventResult", inversedBy="userEventResults")
+     * @ORM\ManyToOne(targetEntity="App\Entity\EventResult", inversedBy="userEventResults", fetch="EAGER")
      */
     private $eventResult;
 
