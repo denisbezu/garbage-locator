@@ -67,6 +67,15 @@
             <a class="nav-link">About</a>
           </router-link>
           <li
+                  v-if="isAuthenticated && isAdmin"
+                  class="nav-item"
+          >
+            <a
+                    class="nav-link"
+                    href="/admin"
+            >Admin panel</a>
+          </li>
+          <li
               v-if="isAuthenticated"
               class="nav-item"
           >
@@ -92,6 +101,12 @@
       isAuthenticated() {
         return this.$store.getters["security/isAuthenticated"]
       },
+      isAdmin() {
+        return this.isAuthenticated && this.user.roles.includes('ROLE_ADMIN');
+      },
+      user() {
+        return this.$store.getters['security/user'];
+      }
     },
     created() {
       let isAuthenticated = JSON.parse(this.$parent.$el.attributes["data-is-authenticated"].value),
