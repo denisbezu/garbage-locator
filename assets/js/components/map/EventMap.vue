@@ -13,7 +13,7 @@
                 type="button">To current position
         </button>
       </div>
-      <div class="row w-100">
+      <div class="row">
         <div class="col-12 col-lg-6">
           <event-list></event-list>
         </div>

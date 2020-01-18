@@ -1,16 +1,43 @@
-@import  './navigation',
-         './home.scss',
-         './login.scss',
-         './register.scss',
-         './map.scss',
-         './events-list.scss',
-         './event-comments.scss',
-         './animations.scss';
+@import './navigation',
+'./home.scss',
+'./login.scss',
+'./register.scss',
+'./map.scss',
+'./events-list.scss',
+'./event-comments.scss',
+'./about.scss',
+'./footer.scss',
+'./animations.scss';
 
- 
-body {
+
+
+body,
+html {
   background: #f8f9fa;
+  height: 100%;
+  position: relative;
 }
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper {
+  height: 100%;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1 0 auto;
+}
+
+.footer {
+  flex-shrink: 0;
+}
+
 .alert {
   color: red;
   padding-left: 0 !important;
@@ -18,7 +45,7 @@ body {
 }
 
 .btn {
-  background:  rgb(32, 133, 57);
+  background: rgb(32, 133, 57);
   color: #fff;
   border-radius: 20px;
 

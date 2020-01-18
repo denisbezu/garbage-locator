@@ -7,7 +7,7 @@
     <div class="card">
       <form class="card-body">
         <div class="form-row">
-          <div class="col-4">
+          <div class="col-12 col-sm-4">
             <input
                 v-model="$v.email.$model"
                 type="email"
@@ -24,7 +24,7 @@
               Email could not be empty.
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-12 col-sm-4">
             <input
                 v-model="$v.password.$model"
                 type="password"
@@ -41,7 +41,7 @@
               Password must have at least {{ $v.password.$params.minLength.min }} letters.
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-12 col-sm-4">
             <button
                 :disabled="!isFormValid || isLoading"
                 type="button"
@@ -142,3 +142,5 @@
     }
   }
 </script>
+
+ 

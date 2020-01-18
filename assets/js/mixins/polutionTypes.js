@@ -22,15 +22,15 @@ export function getPollutionName(type) {
 
 export function getPollutionImageSrc(type) {
   if (type === WATER) {
-    return '/img/watter_pollution.svg';
+    return '/img/water.png';
   }
   if (type === DEFORESTATION) {
-    return '/img/deforestation.png';
+    return '/img/wood.png';
   }
   if (type === GARBAGE) {
-    return '/img/garbage.png';
+    return '/img/trash.png';
   }
   if (type === OTHER) {
-    return '/img/other_pollution.png';
+    return '/img/question.png';
   }
 }

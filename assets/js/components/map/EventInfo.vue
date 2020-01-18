@@ -31,6 +31,7 @@
           <h5 class="card-title">{{ getPollutionName(openedEvent.type) }}</h5>
           <p class="card-text">{{ openedEvent.description }}</p>
           <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-wrap">
             <a href="#"
                @click.stop.prevent="showAddComment = !showAddComment"
                class="btn">Add comment</a>
@@ -39,6 +40,7 @@
                class="btn"
                @click.stop.prevent="toggleRateEvent"
               v-text="hasUserMark ? 'Unmark as done' : 'Mark as done'"></a>
+           </div>
             <span class="badge badge-warning">{{ openedEvent.level }}</span>
           </div>
         </div>
