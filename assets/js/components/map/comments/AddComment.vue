@@ -14,7 +14,7 @@
         <div class="text-right mt-2">
           <button type="button"
                   @click="addComment"
-                  class="btn btn-secondary">Add comment
+                  class="btn">Add comment
           </button>
         </div>
       </div>

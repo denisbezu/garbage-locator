@@ -1,89 +1,102 @@
 <template>
   <div
-    class="events-list row col-12"
-    v-if="selectedEvents && selectedEvents.length > 0"
+      class="events-list row col-12"
+      v-if="selectedEvents && selectedEvents.length > 0"
   >
     <p>Marker's events</p>
 
     <table class="table table-hover">
       <thead>
-        <tr>
-          <th scope="col"></th>
-          <th scope="col">Description</th>
-          <th scope="col">Level</th>
-          <th scope="col">Status</th>
-        </tr>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Description</th>
+        <th scope="col">Level</th>
+        <th scope="col">Status</th>
+      </tr>
       </thead>
       <tbody>
-        <tr
+      <tr
           v-for="(selectedEvent, index) in selectedEvents"
           :key="selectedEvent.id"
           @click="selectEvent(selectedEvent)"
-        >
-          <td class="event-list-item-img-wrapper">
-            <img
+          :class="{'bg-info': isEventSelected(selectedEvent)}"
+      >
+        <td class="event-list-item-img-wrapper">
+          <img
               class="img-fluid"
               :src="getPollutionImageSrc(selectedEvent.type)"
               :alt="getPollutionName(selectedEvent.type)"
-            />
-          </td>
-          <td>{{ selectedEvent.description }}</td>
-          <td>{{ selectedEvent.level }}</td>
-          <td
-            :class="{
+          />
+        </td>
+        <td>{{ selectedEvent.description }}</td>
+        <td>{{ selectedEvent.level }}</td>
+        <td
+            class="status"
+            :class="{ 
               'bg-danger': selectedEvent.status === 1,
               'bg-success': selectedEvent.status === 0
             }"
-          >
-            {{ getStatusName(selectedEvent.status) }}
-          </td>
-        </tr>
+        >
+          {{ getStatusName(selectedEvent.status) }}
+        </td>
+      </tr>
       </tbody>
     </table>
   </div>
 </template>
 
 <script>
-import { eventsEmmiter } from "../../events/emitters";
-import {
-  getPollutionName,
-  getPollutionImageSrc
-} from "../../mixins/polutionTypes";
+  import {eventsEmmiter} from "../../events/emitters";
+  import {
+    getPollutionName,
+    getPollutionImageSrc
+  } from "../../mixins/polutionTypes";
 
-export default {
-  computed: {
-    selectedEvents() {
-      return this.$store.getters["events/selectedEvents"];
-    }
-  },
-  methods: {
-    getPollutionName(type) {
-      return getPollutionName(type);
-    },
-    getPollutionImageSrc(type) {
-      return getPollutionImageSrc(type);
-    },
-    getStatusName(status) {
-      if (!status) {
-        return "Opened";
+  export default {
+    computed: {
+      selectedEvents() {
+        return this.$store.getters["events/selectedEvents"];
+      },
+      openedEvent() {
+        return this.$store.getters['events/openedEvent'];
       }
-
-      return "Finished";
     },
-    selectEvent(selectedEvent) {
-      this.$store.dispatch("events/setOpenedEvent", selectedEvent);
+    methods: {
+      isEventSelected(event) {
+        if (this.openedEvent !== false && this.openedEvent['id']) {
+          return event.id === this.openedEvent.id;
+        }
+
+        return false;
+      },
+      getPollutionName(type) {
+        return getPollutionName(type);
+      },
+      getPollutionImageSrc(type) {
+        return getPollutionImageSrc(type);
+      },
+      getStatusName(status) {
+        if (!status) {
+          return "Opened";
+        }
+
+        return "Finished";
+      },
+      selectEvent(selectedEvent) {
+        this.$store.dispatch("events/setOpenedEvent", selectedEvent);
+      }
     }
-  }
-};
+  };
 </script>
 
 <style scoped lang="scss">
-tbody > tr {
-  cursor: pointer;
-}
-p {
-  color: rgb(32, 133, 57);
-  opacity: 0;
-  animation: blink 7s forwards;
-}
+  tbody > tr {
+    cursor: pointer;
+  }
+
+  p {
+    color: rgb(32, 133, 57);
+    opacity: 0;
+    animation: blink 7s forwards;
+  }
 </style>

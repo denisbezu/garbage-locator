@@ -16,6 +16,7 @@
     "license": "UNLICENSED",
     "private": true,
     "scripts": {
+        "encore": "encore",
         "dev-server": "encore dev-server",
         "dev": "encore dev",
         "watch": "encore dev --watch",
@@ -34,6 +35,8 @@
         "vuex": "^3.1.1",
         "axios": "^0.19.0",
         "qs": "^6.9.1",
-        "vue-slider-component": "^3.1.0"
+        "vue-slider-component": "^3.1.0",
+        "vuelidate": "^0.7.5",
+        "vue-progressbar": "^0.7.5"
     }
 }

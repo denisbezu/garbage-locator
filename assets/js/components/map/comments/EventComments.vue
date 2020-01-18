@@ -1,9 +1,9 @@
 <template>
   <div class="event-comments" v-if="comments.length > 0">
-    <h4 class="h4">
-      <span>Comments</span>
+    <div class="h-holder">
+      <p>Comments</p>
       <span class="badge badge-info">{{ comments.length }}</span>
-    </h4>
+    </div>
     <div v-for="comment in comments"
          :key="comment.id"
          class="card mt-2">
@@ -11,14 +11,14 @@
         {{ comment.user.firstname + ' ' + comment.user.lastname }}
       </div>
       <div class="card-body">
-        <p class="card-text">{{ comment.comment }}</p>
+        <div class="card-text">{{ comment.comment }}</div>
         <div class="card-score align-items-center d-flex">
-          <button class="btn btn-primary"
+          <button class="btn btn-mark"
                   @click="addCommentScore(comment)"
                   type="button">+
           </button>
           <div class="font-weight-bold h4 m-0 px-3">{{ comment.score }}</div>
-          <button class="btn btn-primary"
+          <button class="btn btn-mark"
                   @click="removeCommentScore(comment)"
                   type="button">-
           </button>
@@ -50,4 +50,19 @@
     max-width: 25px;
     cursor: pointer;
   }
+  p {
+  color: rgb(32, 133, 57);
+  opacity: 0;
+  animation: blink 7s forwards;
+  margin-bottom: 0;
+  margin-right: 5px;
+}
+.h-holder {
+  display: flex;
+  align-items: center;
+}
+.card-score {
+  margin-top: 15px;
+}
+ 
 </style>
