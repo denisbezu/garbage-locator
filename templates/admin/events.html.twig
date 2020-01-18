@@ -9,6 +9,7 @@
             <th>Description</th>
             <th>Type</th>
             <th>Status</th>
+            <th>AC</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -19,7 +20,21 @@
                 <td>{{ event.id }}</td>
                 <td>{{ event.description|slice(0, 25) }}</td>
                 <td>{{ event.type }}</td>
-                <td>{{ event.status }}</td>
+                <td>
+                    {% if event.status == 1 %}
+                        Finished
+                    {% else %}
+                        Opended
+                    {% endif %}
+
+                </td>
+                <td>
+                    {% if event.id in eventsApprovementCount|keys %}
+                        {{ eventsApprovementCount[event.id] }}
+                    {% else %}
+                        0
+                    {% endif %}
+                </td>
                 <td>
                     <a href="{{ path("admin_event", {id: event.id}) }}" class="btn btn-secondary">View</a>
                 </td>

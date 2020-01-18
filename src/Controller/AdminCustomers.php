@@ -60,7 +60,7 @@ class AdminCustomers extends AbstractController
         $customer->setEmail($request->get('email'));
 
         if ($pswd = $request->get('password')) {
-            $customer->setPassword($pswd);
+            $customer->setPlainPassword($pswd);
         }
 
         if ($request->get('isAdmin')) {

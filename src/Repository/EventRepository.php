@@ -19,6 +19,50 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
+    public function getApprovementCount()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+              SELECT er.event_id, Count(*) as `count`
+              FROM `event_result` as er 
+              LEFT JOIN user_event_result AS uer ON uer.event_result_id = er.id 
+              WHERE uer.id IS NOT NULL 
+              GROUP BY er.event_id';
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $res = $stmt->fetchAll();
+        $eventsApprovementCount = [];
+
+        if (empty($res) == false) {
+            foreach ($res as $row)
+            {
+                $eventsApprovementCount[$row['event_id']] = (int)$row['count'];
+            }
+        }
+
+        return $eventsApprovementCount;
+    }
+
+    public function getApprovementCountById(int $idEvent): int
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+              SELECT Count(*) AS `count`
+              FROM `event_result` AS er 
+              LEFT JOIN user_event_result AS uer ON uer.event_result_id = er.id 
+              WHERE uer.id IS NOT NULL AND er.event_id = :idEvent
+              GROUP BY er.event_id';
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['idEvent' => $idEvent]);
+        $res = $stmt->fetch();
+
+        return (int)$res['count'];
+    }
+
     // /**
     //  * @return Event[] Returns an array of Event objects
     //  */

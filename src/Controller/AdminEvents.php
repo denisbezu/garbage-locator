@@ -26,7 +26,11 @@ class AdminEvents extends AbstractController
             ->getRepository(Event::class)
             ->findAll();
 
-        return $this->render('admin/events.html.twig', ['events' => $events]);
+        $eventsApprovementCount = $this->getDoctrine()
+            ->getRepository(Event::class)
+            ->getApprovementCount();
+
+        return $this->render('admin/events.html.twig', ['events' => $events, 'eventsApprovementCount' => $eventsApprovementCount]);
     }
 
     /**
@@ -39,7 +43,11 @@ class AdminEvents extends AbstractController
             ->getRepository(Event::class)
             ->find($id);
 
-        return $this->render('admin/event.html.twig', ['event' => $event]);
+        $eventApprovementCount = $this->getDoctrine()
+            ->getRepository(Event::class)
+            ->getApprovementCountById($id);
+
+        return $this->render('admin/event.html.twig', ['event' => $event, 'eventApprovementCount' => $eventApprovementCount]);
     }
 
     /**
@@ -48,11 +56,22 @@ class AdminEvents extends AbstractController
      */
     public function editEvent(Request $request, int $id): Response
     {
-        $event = $this->getDoctrine()
-            ->getRepository(Event::class)
-            ->find($id);
+        $manager = $this->getDoctrine()->getManager();
+        $event = $manager->getRepository(Event::class)->find($id);
 
-        return $this->render('admin/event.html.twig', ['event' => $event]);
+        $event->setLevel((int)$request->get('level'));
+        $event->setType($request->get('type'));
+        $event->setDescription($request->get('description'));
+
+        if ($request->get('status')) {
+            $event->setStatus(1);
+        } else {
+            $event->setStatus(0);
+        }
+
+        $manager->flush();
+
+        return $this->redirectToRoute('admin_event', ['id' => $id]);
     }
 
     /**

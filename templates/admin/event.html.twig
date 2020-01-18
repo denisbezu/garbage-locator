@@ -26,11 +26,26 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div class="tab-pane active container" id="event">
-            <div>
-                <span>Creator:</span> <a href="{{ path('admin_customer', {id: event.creator.id}) }}">{{ event.creator.firstname ~ event.creator.lastname }}</a>
-            </div>
+
 
             <form action="{{ path("admin_event_edit", {id: event.id}) }}" method="post">
+
+                <div class="form-group">
+                    <span>Creator:</span> <a href="{{ path('admin_customer', {id: event.creator.id}) }}">{{ event.creator.firstname ~ event.creator.lastname }}</a>
+                </div>
+
+                <div class="form-group">
+                    <span>Approvement count: {{ eventApprovementCount }}</span>
+                </div>
+
+                <div class="form-group">
+                    <input
+                            type="checkbox"
+                            name="status"
+                            id="status"
+                            {% if event.status == 1 %}checked{% endif %}>
+                    <label for="status" class="form-check-label">Approved</label>
+                </div>
 
                 <div class="form-group">
                     <label for="type">Type:</label>
