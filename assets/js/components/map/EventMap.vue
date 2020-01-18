@@ -45,7 +45,8 @@
         currentPosition: null,
         markersConfigured: false,
         markerObjects: [],
-        currentPositionIcon: 'https://www.robotwoods.com/dev/misc/bluecircle.png'
+        currentPositionIcon: 'https://www.robotwoods.com/dev/misc/bluecircle.png',
+        markerIcon: 'https://s1.iconbird.com/ico/1012/PlexIcons/w512h5121350249279recyclingbinfull.png'
       }
     },
     computed: {
@@ -98,12 +99,19 @@
         }
 
         let marker, i;
+        const markerIcon = {
+          url: self.markerIcon, // url
+          scaledSize: new google.maps.Size(35, 35), // scaled size
+          origin: new google.maps.Point(0,0), // origin
+          anchor: new google.maps.Point(0, 0) // anchor
+        };
 
         for (i = 0; i < self.markers.length; i++) {
           marker = new google.maps.Marker({
             position: new google.maps.LatLng(parseFloat(self.markers[i]['latitude']), parseFloat(self.markers[i]['longitude'])),
             map: self.map,
-            animation: google.maps.Animation.DROP
+            animation: google.maps.Animation.DROP,
+            icon: markerIcon
           });
 
           google.maps.event.addListener(marker, 'click', ((marker, i) => {
