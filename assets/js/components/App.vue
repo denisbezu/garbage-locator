@@ -80,6 +80,7 @@
     </nav>
 
     <router-view/>
+    <vue-progress-bar></vue-progress-bar>
   </div>
 </template>
 
@@ -99,6 +100,7 @@
     }
     },
     created() {
+      const self = this;
       let isAuthenticated = JSON.parse(this.$parent.$el.attributes["data-is-authenticated"].value),
         user = JSON.parse(this.$parent.$el.attributes["data-user"].value);
 
@@ -114,8 +116,19 @@
             document.write(err.response.data);
             document.close();
           }
+
           throw err;
         });
+      });
+
+      axios.interceptors.request.use(config => {
+        self.$Progress.start(); // for every request start the progress
+        return config;
+      });
+
+      axios.interceptors.response.use(response => {
+        self.$Progress.finish(); // finish when a response is received
+        return response;
       });
     },
   }
