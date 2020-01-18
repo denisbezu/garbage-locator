@@ -3,11 +3,25 @@
     color: rgba(0, 0, 0, .5);
   }
 
-  .bg-success {
-    background: rgb(32, 133, 57) !important;
+  img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .event-list-item-img-wrapper {
+    padding: .75rem 0;
+  }
+
+  .bg-info {
+    background: rgb(185, 226, 196) !important;
   }
 
   .status {
     color: #fff;
+  }
+
+  @media screen and (max-width: 991px) {
+    margin: 0;
+    padding-right: 0;
   }
 }

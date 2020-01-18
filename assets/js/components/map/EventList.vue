@@ -10,8 +10,8 @@
       <tr>
         <th scope="col"></th>
         <th scope="col">Description</th>
-        <th scope="col">Level</th>
-        <th scope="col">Status</th>
+        <th scope="col" class="text-center">Level</th>
+        <th scope="col" class="text-center">Status</th>
       </tr>
       </thead>
       <tbody>
@@ -29,15 +29,12 @@
           />
         </td>
         <td>{{ selectedEvent.description }}</td>
-        <td>{{ selectedEvent.level }}</td>
-        <td
-            class="status"
-            :class="{ 
-              'bg-danger': selectedEvent.status === 1,
-              'bg-success': selectedEvent.status === 0
-            }"
-        >
-          {{ getStatusName(selectedEvent.status) }}
+        <td class="text-center">{{ selectedEvent.level }}</td>
+        <td class="status text-center" v-if="selectedEvent.status === 1">
+          <img class="status-img" src="/img/open.png" alt="">
+        </td>
+        <td class="status text-center" v-if="selectedEvent.status === 0">
+          <img class="status-img" src="/img/close.png" alt="">
         </td>
       </tr>
       </tbody>
@@ -100,3 +97,4 @@
     animation: blink 7s forwards;
   }
 </style>
+

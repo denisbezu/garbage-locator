@@ -3,11 +3,50 @@
 
     .card-title {
         color: rgb(32, 133, 57);
-      }
+    }
+
+    .btn-wrap {
+        display: flex;
+
+        .btn:first-child {
+            margin-right: 10px;
+        }
+    }
+
+    .badge-warning {
+        position: relative;
+        border: 1px solid rgba(0, 0, 0, 0.5);
+
+        &:before {
+            display: block;
+            content: '';
+            background: url(../../public/img/alert.png);
+            background-size: cover;
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            left: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+
+    @media screen and (max-width: 991px) {
+        margin-top: 30px;
+    }
 }
 
 .event-comments {
     margin-top: 50px;
+
+    @media screen and (max-width: 991px) {
+        margin-top: 30px;
+    }
+
+    .badge-info { 
+        border: 1px solid rgba(0, 0, 0, 0.5);
+    }
+
     .btn-mark {
         width: 30px;
         height: 30px;
