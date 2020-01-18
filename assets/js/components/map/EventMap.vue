@@ -14,10 +14,10 @@
         </button>
       </div>
       <div class="row w-100">
-        <div class="col-6">
+        <div class="col-12 col-lg-6">
           <event-list></event-list>
         </div>
-        <div class="col-6">
+        <div class="col-12 col-lg-6">
           <event-info></event-info>
           <event-add :current-position="currentPosition"></event-add>
         </div>

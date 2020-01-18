@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <nav v-on:click="navcollapse" class="navbar navbar-expand-lg navbar-light">
       <router-link
           class="navbar-brand"
           to="/home"
@@ -92,6 +92,11 @@
       isAuthenticated() {
         return this.$store.getters["security/isAuthenticated"]
       },
+    },
+    methods: {
+      navcollapse: function () {
+      $('#navbarNav').toggleClass('show');
+    }
     },
     created() {
       let isAuthenticated = JSON.parse(this.$parent.$el.attributes["data-is-authenticated"].value),

@@ -33,11 +33,10 @@
           <div class="d-flex justify-content-between align-items-center">
             <a href="#"
                @click.stop.prevent="showAddComment = !showAddComment"
-               class="btn btn-primary">Add comment</a>
+               class="btn">Add comment</a>
             <a href="#"
                v-if="user.id !== openedEvent.creator_id && openedEvent.status === 0"
-               :class="{'btn-success': !hasUserMark, 'btn-warning': hasUserMark}"
-               class="btn btn-success"
+               class="btn"
                @click.stop.prevent="toggleRateEvent"
               v-text="hasUserMark ? 'Unmark as done' : 'Mark as done'"></a>
             <span class="badge badge-warning">{{ openedEvent.level }}</span>

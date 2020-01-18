@@ -30,7 +30,8 @@
           <td>{{ selectedEvent.description }}</td>
           <td>{{ selectedEvent.level }}</td>
           <td
-            :class="{
+          class="status"
+            :class="{ 
               'bg-danger': selectedEvent.status === 1,
               'bg-success': selectedEvent.status === 0
             }"
