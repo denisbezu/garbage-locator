@@ -103,7 +103,7 @@
           url: self.markerIcon, // url
           scaledSize: new google.maps.Size(35, 35), // scaled size
           origin: new google.maps.Point(0,0), // origin
-          anchor: new google.maps.Point(0, 0) // anchor
+          anchor: new google.maps.Point(17, 17) // anchor
         };
 
         for (i = 0; i < self.markers.length; i++) {

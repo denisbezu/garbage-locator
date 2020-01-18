@@ -30,10 +30,10 @@
         </td>
         <td>{{ selectedEvent.description }}</td>
         <td class="text-center">{{ selectedEvent.level }}</td>
-        <td class="status text-center" v-if="selectedEvent.status === 1">
+        <td class="status text-center" v-if="selectedEvent.status === 0">
           <img class="status-img" src="/img/open.png" alt="">
         </td>
-        <td class="status text-center" v-if="selectedEvent.status === 0">
+        <td class="status text-center" v-if="selectedEvent.status === 1">
           <img class="status-img" src="/img/close.png" alt="">
         </td>
       </tr>
