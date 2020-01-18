@@ -9,28 +9,56 @@
         <div class="form-group">
           <label for="email">Email address</label>
           <input
-              v-model="user.email"
+              v-model="$v.user.email.$model"
               type="email"
               class="form-control"
+              :class="{'is-invalid': $v.user.email.$error}"
           >
+          <div v-if="!$v.user.email.email"
+               class="invalid-feedback">
+            Please provide a valid email.
+          </div>
+          <div v-if="!$v.user.email.required"
+               class="invalid-feedback">
+            Email could not be empty.
+          </div>
         </div>
         <div class="form-group">
           <label for="firstname">Firstname</label>
           <input
-              v-model="user.firstname"
+              v-model="$v.user.firstname.$model"
               type="text"
               class="form-control"
+              :class="{'is-invalid': $v.user.firstname.$error}"
           >
+          <div v-if="!$v.user.firstname.required"
+               class="invalid-feedback">
+            Firstname is required.
+          </div>
+          <div v-if="!$v.user.firstname.minLength"
+               class="invalid-feedback">
+            Firstname must have at least {{ $v.user.firstname.$params.minLength.min }} letters.
+          </div>
         </div>
         <div class="form-group">
           <label for="lastname">Lastname</label>
           <input
-              v-model="user.lastname"
+              v-model="$v.user.lastname.$model"
               type="text"
-              class="form-control">
+              class="form-control"
+              :class="{'is-invalid': $v.user.lastname.$error}"
+          >
+          <div v-if="!$v.user.lastname.required"
+               class="invalid-feedback">
+            Lastname is required.
+          </div>
+          <div v-if="!$v.user.lastname.minLength"
+               class="invalid-feedback">
+            Lastname must have at least {{ $v.user.lastname.$params.minLength.min }} letters.
+          </div>
         </div>
         <button
-            :disabled="user.email.length === 0 || user.firstname.length === 0 || user.lastname.length === 0 || isLoading"
+            :disabled="!isTopFormValid || isLoading"
             type="button"
             class="btn"
             @click="saveAccountSettings()">
@@ -48,21 +76,35 @@
         <div class="form-group">
           <label for="password">Password</label>
           <input
-              v-model="password"
+              v-model="$v.password.$model"
               type="password"
               class="form-control"
+              :class="{'is-invalid': $v.password.$error}"
           >
+          <div v-if="!$v.password.required"
+               class="invalid-feedback">
+            Password is required.
+          </div>
+          <div v-if="!$v.password.minLength"
+               class="invalid-feedback">
+            Password must have at least {{ $v.password.$params.minLength.min }} letters.
+          </div>
         </div>
         <div class="form-group">
           <label for="repeatPassword">Repeat Password</label>
           <input
-              v-model="repeatPassword"
+              v-model="$v.repeatPassword.$model"
               type="password"
               class="form-control"
+              :class="{'is-invalid': $v.repeatPassword.$error}"
           >
+          <div v-if="!$v.repeatPassword.sameAsPassword"
+               class="invalid-feedback">
+            Passwords must be identical.
+          </div>
         </div>
         <button
-            :disabled="password !== repeatPassword || password.length < 6"
+            :disabled="!isBottomFormValid"
             type="button"
             class="btn"
             @click="savePasswordSettings()"
@@ -91,6 +133,8 @@
 <script>
   import user from '../../mixins/user';
   import ErrorMessage from '../ErrorMessage';
+
+  const {required, minLength, email, sameAs} = require('vuelidate/lib/validators');
 
   export default {
     components: {
@@ -126,6 +170,7 @@
         if (!this.hasError) {
           this.password = '';
           this.repeatPassword = '';
+          this.$v.$reset();
         }
       }
     },
@@ -138,14 +183,45 @@
       },
       error() {
         return this.$store.getters['account/error'];
+      },
+      isTopFormValid() {
+        return !this.$v.user.firstname.$invalid
+          && !this.$v.user.lastname.$invalid
+          && !this.$v.user.email.$invalid;
+      },
+      isBottomFormValid() {
+        return !this.$v.password.$invalid && !this.$v.repeatPassword.$invalid;
       }
     },
     mixins: [user],
+    validations: {
+      user: {
+        firstname: {
+          minLength: minLength(3),
+          required
+        },
+        lastname: {
+          minLength: minLength(3),
+          required
+        },
+        email: {
+          email,
+          required
+        },
+      },
+      password: {
+        minLength: minLength(3),
+        required
+      },
+      repeatPassword: {
+        sameAsPassword: sameAs('password')
+      }
+    }
   }
 </script>
 
 <style scoped>
- .account-page {
-   margin-bottom: 40px;
- }
+  .account-page {
+    margin-bottom: 40px;
+  }
 </style>
