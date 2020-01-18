@@ -20,6 +20,13 @@ export default {
     setOpenedEvent(state, payload) {
       state.openedEvent = payload;
       eventsEmmiter.$emit('setOpenedEvent', payload);
+    },
+    modifyEvent(state, payload) {
+      for(let eventCounter = 0; eventCounter < state.selectedEvents.length; eventCounter++) {
+        if (state.selectedEvents[eventCounter].id === payload.id) {
+          state.selectedEvents[eventCounter] = payload;
+        }
+      }
     }
   },
   actions: {
@@ -59,6 +66,7 @@ export default {
     async toggleEventUserResult({commit}, payload) {
       let response = await EventsAPI.toggleEventResult(payload);
       commit('setOpenedEvent', response.data);
+      commit('modifyEvent', response.data);
     },
     async cleanMarkers({commit}, payload) {
       commit('setMarkers', []);
