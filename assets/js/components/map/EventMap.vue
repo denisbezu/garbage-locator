@@ -155,7 +155,8 @@
           position: new google.maps.LatLng(parseFloat(pos.lat), parseFloat(pos.lng)),
           map: self.map,
           animation: google.maps.Animation.DROP,
-          icon: self.currentPositionIcon
+          icon: self.currentPositionIcon,
+          zIndex: 10
         });
       }
     },
